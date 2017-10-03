@@ -19,7 +19,7 @@ class BoardList:
             print("that does not look like a task")
 
     def edit_task(self):
-
+        pass
 
     def delete_task(self):
         pass
