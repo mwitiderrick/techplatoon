@@ -1,6 +1,4 @@
 import sys
-import board
-import boardlist
 import csv
 import re
 import bcrypt
@@ -19,15 +17,17 @@ class User:
                             Email:    {}
                             Username: {}
                             Password: {}
-                    
+
         """.format(self.fullname, self.fullname, self.email, self.username, self.password)
 
     @staticmethod
-    def sign_in(email, password):
+    def sign_in(email_to_be_entered, password_to_be_entered):
         with open("users.csv", "r") as user_file:
             users = csv.DictReader(user_file)
             for user in users:
-                if email == user['email'] and bcrypt.hashpw(password, hashed) == hashed:
+                password_to_be_hashed = bytes(password_to_be_entered, 'utf-8')
+                if email_to_be_entered == user['email'] and bcrypt.hashpw(password_to_be_entered,
+                                                                          password_to_be_hashed) == hashe:
                     print("You are in..")
                 else:
                     print("Wrong Credentials :(")
@@ -42,28 +42,12 @@ def check_email(email_to_check):
      (\.[a-zA-Z]{2,4}) # dot-something
      )''', re.VERBOSE)
     if not email_regex.match(email_to_check):
-        return  False
+        return False
     return True
 
 
 def hash_password(password_to_hash):
     return bcrypt.hashpw(password_to_hash, bcrypt.gensalt())
-
-
-def menu():
-    print("Welcome to the menu: ")
-    board_name = input('Enter board name: ')
-    board_color = input('Enter board color: ')
-    board.Board(board_name, board_color)
-    print("{} has been set up. Do you want to add a list to it y/n?".format(board_name))
-    user_choice = input()
-    if user_choice == 'y':
-        list_name = input('Enter the name of the list: ')
-        boardlist.BoardList(list_name)
-    elif user_choice == 'n':
-        pass
-    else:
-        print('Invlaid input')
 
 
 if __name__ == '__main__':
