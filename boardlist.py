@@ -1,4 +1,4 @@
-from task import  Task
+from task import Task
 
 
 class BoardList:
@@ -6,11 +6,13 @@ class BoardList:
         self.tasks = tasks
         self.name = name
 
+
     def __repr__(self):
         return """
         Boardlist: {}
         {}
         """.format(self.name,self.tasks)
+
 
     def add_task(self, task):
         if isinstance(task, Task):
@@ -18,17 +20,29 @@ class BoardList:
         else:
             print("that does not look like a task")
 
+<<<<<<< HEAD
     def edit_task(self):
         pass
+=======
 
-    def delete_task(self):
-        pass
+    def edit_task(self):
+        task_to_delete = input('enter the task to delete: ')
+        for element in tasks:
+            if element == task_to_delete:
+                new_task = input('enter a new task')
+                element = new_task
+                print(tasks)
+>>>>>>> 69483d778193afe56f352ebe76a4108d6080d11f
 
 
-userstory1 = BoardList('dd')
-userstory1.add_task(Task("wash",'12/10/2017','09:00'))
-print(userstory1)
+    def delete_task(self, tasks):
+         n = int(input("Enter the position:"))
+         if n >= (len(tasks)+1):
+            del tasks[n-1]
+            print(tasks)
+         else:
+             print('Error')
 
 
-if __name__ == '__main__':
-    pass
+
+userstory1 = BoardList()
