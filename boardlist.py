@@ -20,19 +20,8 @@ class BoardList:
         else:
             print("that does not look like a task")
 
-<<<<<<< HEAD
     def edit_task(self):
         pass
-=======
-
-    def edit_task(self):
-        task_to_delete = input('enter the task to delete: ')
-        for element in tasks:
-            if element == task_to_delete:
-                new_task = input('enter a new task')
-                element = new_task
-                print(tasks)
->>>>>>> 69483d778193afe56f352ebe76a4108d6080d11f
 
 
     def delete_task(self, tasks):
