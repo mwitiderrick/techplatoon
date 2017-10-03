@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 import csv
-=======
->>>>>>> master
 from boardlist import BoardList
 
 
@@ -37,13 +34,8 @@ class Board():
                 if member == user['username']:
                     self.users.append(member)
                 else:
-<<<<<<< HEAD
                     print("member doesn't exist")
 
-=======
-                    print("member does not exist")
-    
->>>>>>> master
     def add_boardlist(self, boardlist):
         if isinstance(boardlist, BoardList):
             self.boardlists.append(boardlist)
@@ -54,11 +46,6 @@ class Board():
 if __name__ == '__main__':
     firstboard = Board("hypothesis", "red")
     firstboard.add_boardlist(BoardList("To do"))
-<<<<<<< HEAD
     firstboard.add_member("gf")
-=======
-    firstboard.add_member("cave")
-    firstboard.add_member("d")
->>>>>>> master
     print(firstboard)
     
