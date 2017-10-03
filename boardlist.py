@@ -34,4 +34,6 @@ class BoardList:
 
 
 
-userstory1 = BoardList()
+userstory1 = BoardList('dd')
+userstory1.add_task(Task("wash",'12/10/2017','09:00'))
+print(userstory1)
