@@ -1,44 +1,9 @@
 import sys
 import board
 import boardlist
-import task
 import csv
 import re
-
-
-class Account:
-    def __init__(self, users=[]):
-        self.users = users
-        # with open("users.csv", "w") as csv_file:
-        #     csv_writer = csv.writer(csv_file)
-        #     headers = ['fullname', 'email', 'username', 'password']
-        #     csv_writer.writerow(headers)
-
-    def menu(self):
-        print("Welcome to the menu: ")
-        board_name = input('Enter board name: ')
-        board_color = input('Enter board color: ')
-        board.Board(board_name, board_color)
-        print("{} has been set up. Do you want to add a list to it y/n?".format(board_name))
-        user_choice = input()
-        if user_choice == 'y':
-            list_name = input('Enter the name of the list: ')
-            boardlist.BoardList(list_name)
-        elif user_choice == 'n':
-            pass
-        else:
-            print('Invlaid input')
-
-    def add_user(self, user):
-        self.users.append(user)
-        print(self.users)
-
-    def sign_in(self):
-        user_email = input('Enter your email address: ')
-        user_password = input('Enter your password: ')
-        for account in self.users:
-            if account.email == user_email and account.password == user_password:
-                self.menu()
+import bcrypt
 
 
 class User:
@@ -57,6 +22,16 @@ class User:
                     
         """.format(self.fullname, self.fullname, self.email, self.username, self.password)
 
+    @staticmethod
+    def sign_in(email, password):
+        with open("users.csv", "r") as user_file:
+            users = csv.DictReader(user_file)
+            for user in users:
+                if email == user['email'] and bcrypt.hashpw(password, hashed) == hashed:
+                    print("You are in..")
+                else:
+                    print("Wrong Credentials :(")
+
 
 def check_email(email_to_check):
     # Create email regex.
@@ -72,14 +47,30 @@ def check_email(email_to_check):
 
 
 def hash_password(password_to_hash):
-    pass
+    return bcrypt.hashpw(password_to_hash, bcrypt.gensalt())
 
 
-new_user_account = Account()
+def menu():
+    print("Welcome to the menu: ")
+    board_name = input('Enter board name: ')
+    board_color = input('Enter board color: ')
+    board.Board(board_name, board_color)
+    print("{} has been set up. Do you want to add a list to it y/n?".format(board_name))
+    user_choice = input()
+    if user_choice == 'y':
+        list_name = input('Enter the name of the list: ')
+        boardlist.BoardList(list_name)
+    elif user_choice == 'n':
+        pass
+    else:
+        print('Invlaid input')
+
+
 if __name__ == '__main__':
     while True:
         print('Enter 1 to sign up 2 to sign in and q to exit ')
         choice = input()
+
         if choice == '1':
             print('Creating a new user:\n')
             fullname = input('Enter fullname: ')
@@ -91,15 +82,19 @@ if __name__ == '__main__':
 
             username = input('Enter Username: ')
             password = input('Enter Password: ')
-            new_user_account.add_user(User(fullname=fullname, email=email, username=username, password=password))
+            hashed = hash_password(bytes(password, 'utf-8'))
+            new_user = User(fullname=fullname, email=email, username=username, password=hashed)
+
             with open("users.csv", "a+") as users_file:
                 csvWriter = csv.writer(users_file)
-                dataRow = [fullname, email, username, password]
+                dataRow = [fullname, email, username, hashed]
                 csvWriter.writerow(dataRow)
                 print("New user created successfully..")
 
         elif choice == '2':
-            new_user_account.sign_in()
+            user_email = input('Enter your email address: ')
+            user_password = input('Enter your password: ')
+            User.sign_in(user_email, user_password)
         elif choice == 'q':
             sys.exit()
         else:
