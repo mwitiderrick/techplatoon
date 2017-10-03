@@ -1,4 +1,4 @@
-from task import  Task
+# from task import  Task
 
 
 class BoardList:
@@ -19,16 +19,15 @@ class BoardList:
             print("that does not look like a task")
 
     def edit_task(self):
+            pass
 
+    def delete_task(self, tasks):
+         n = int(input("Enter the position"))
+         if n >= len(tasks):
+            del tasks[n]
+            print(tasks)
 
-    def delete_task(self):
-        pass
 
 
 userstory1 = BoardList('dd')
-userstory1.add_task(Task("wash",'12/10/2017','09:00'))
-print(userstory1)
 
-
-if __name__ == '__main__':
-    pass
