@@ -3,18 +3,16 @@ import board
 import boardlist
 import task
 import csv
+import re
 
 
 class Account:
     def __init__(self, users=[]):
         self.users = users
-        try:
-            with open("contacts.csv", "x") as csv_file:
-                csv_writer = csv.writer(csv_file)
-                headers = ['fullname', 'email', 'username', 'password']
-                csv_writer.writerow(headers)
-        except:
-            pass
+        # with open("users.csv", "w") as csv_file:
+        #     csv_writer = csv.writer(csv_file)
+        #     headers = ['fullname', 'email', 'username', 'password']
+        #     csv_writer.writerow(headers)
 
     def menu(self):
         print("Welcome to the menu: ")
@@ -60,7 +58,24 @@ class User:
         """.format(self.fullname, self.fullname, self.email, self.username, self.password)
 
 
-derrick = Account()
+def check_email(email_to_check):
+    # Create email regex.
+    email_regex = re.compile(r'''(
+     [a-zA-Z0-9._%+-]+ # username
+     @                 # @ symbol
+     [a-zA-Z0-9.-]+    # domain name
+     (\.[a-zA-Z]{2,4}) # dot-something
+     )''', re.VERBOSE)
+    if not email_regex.match(email_to_check):
+        return  False
+    return True
+
+
+def hash_password(password_to_hash):
+    pass
+
+
+new_user_account = Account()
 if __name__ == '__main__':
     while True:
         print('Enter 1 to sign up 2 to sign in and q to exit ')
@@ -68,18 +83,23 @@ if __name__ == '__main__':
         if choice == '1':
             print('Creating a new user:\n')
             fullname = input('Enter fullname: ')
-            email = input('Enter email: ')
+            while True:
+                email = input('Enter email: ')
+                if check_email(email):
+                    break
+                print('That does not look like a valid email address..')
+
             username = input('Enter Username: ')
             password = input('Enter Password: ')
-            derrick.add_user(User(fullname=fullname, email=email, username=username, password=password))
+            new_user_account.add_user(User(fullname=fullname, email=email, username=username, password=password))
             with open("users.csv", "a+") as users_file:
                 csvWriter = csv.writer(users_file)
-                dataRow = []
+                dataRow = [fullname, email, username, password]
                 csvWriter.writerow(dataRow)
-                print("contact exported to csv")
+                print("New user created successfully..")
 
         elif choice == '2':
-            derrick.sign_in()
+            new_user_account.sign_in()
         elif choice == 'q':
             sys.exit()
         else:
