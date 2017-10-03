@@ -1,4 +1,4 @@
-from user import User
+import csv
 from boardlist import BoardList
 
 
@@ -28,12 +28,14 @@ class Board():
             return self.name
 
     def add_member(self, member):
-        if isinstance(member, User): 
-            if member in self.users:
-                self.users.append(member)
-            else:
-                print("user does not exist")
-    
+        with open("users.csv", "r") as user_file:
+            users = csv.DictReader(user_file)
+            for user in users:
+                if member == user['username']:
+                    self.users.append(member)
+                else:
+                    print("member doesn't exist")
+
     def add_boardlist(self, boardlist):
         if isinstance(boardlist, BoardList):
             self.boardlists.append(boardlist)
