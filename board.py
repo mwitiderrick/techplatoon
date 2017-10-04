@@ -12,7 +12,8 @@ class Board():
     def __repr__(self):
         return """
         Board: {}
-        {} {}
+        {} 
+        Board Members: {}
         """.format(self.name, self.boardlists, self.users)
 
     def change_board_name(self, newname):
@@ -45,7 +46,9 @@ class Board():
 
 if __name__ == '__main__':
     firstboard = Board("hypothesis", "red")
-    firstboard.add_boardlist(BoardList("To do"))
-    firstboard.add_member("gf")
+    firstboard.add_boardlist(BoardList("To do", ["wash", '12/10/2017', '09:00', "please notify upon completion"]))
+    firstboard.add_boardlist(BoardList("Doing", ["wash", '12/10/2017', '09:00', "please notify upon completion"]))
+    firstboard.add_member("cave")
+    firstboard.add_member("spicy")
     print(firstboard)
     
