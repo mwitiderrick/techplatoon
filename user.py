@@ -1,7 +1,7 @@
 import sys
 import csv
 import re
-import bcrypt
+import hashlib
 
 
 class User:
@@ -25,9 +25,8 @@ class User:
         with open("users.csv", "r") as user_file:
             users = csv.DictReader(user_file)
             for user in users:
-                password_to_be_hashed = bytes(password_to_be_entered, 'utf-8')
-                if email_to_be_entered == user['email'] and bcrypt.hashpw(password_to_be_entered,
-                                                                          password_to_be_hashed) == hashe:
+                password_to_bytes = bytes(password_to_be_entered, 'utf-8')
+                if email_to_be_entered == user['email'] and hash_password(password_to_bytes) == user['password']:
                     print("You are in..")
                 else:
                     print("Wrong Credentials :(")
@@ -47,7 +46,7 @@ def check_email(email_to_check):
 
 
 def hash_password(password_to_hash):
-    return bcrypt.hashpw(password_to_hash, bcrypt.gensalt())
+    return hashlib.sha256(password_to_hash).hexdigest()
 
 
 if __name__ == '__main__':
