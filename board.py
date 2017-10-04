@@ -1,5 +1,7 @@
+import sys
 import csv
 from boardlist import BoardList
+from task import Task
 
 
 class Board():
@@ -42,13 +44,21 @@ class Board():
             self.boardlists.append(boardlist)
         else:
             print("that isn't a board")
-        
 
+    
 if __name__ == '__main__':
-    firstboard = Board("hypothesis", "red")
-    firstboard.add_boardlist(BoardList("To do", ["wash", '12/10/2017', '09:00', "please notify upon completion"]))
-    firstboard.add_boardlist(BoardList("Doing", ["wash", '12/10/2017', '09:00', "please notify upon completion"]))
+    print("create a board")
+    boardname = input("Board Name: ")
+    boardcolor = input("Board Color: ")
+    firstboard = Board(boardname, boardcolor)
+    print('create boardlist and tasks')
+    boardlistname = input("Boardlist name: ")
+
+    board_list = BoardList(boardlistname, [Task('nm', '', '07:09', 'hhgghh')])
+    firstboard.add_boardlist(board_list)
+            
     firstboard.add_member("cave")
     firstboard.add_member("spicy")
+    
     print(firstboard)
     

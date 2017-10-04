@@ -11,7 +11,7 @@ class BoardList:
         Boardlist: {}
         {}
         """.format(self.name, self.tasks)
-
+    
     def add_task(self, task):
         if isinstance(task, Task):
             self.tasks.append(task)
@@ -30,6 +30,5 @@ class BoardList:
             print('Error')
 
 
-# userstory1 = BoardList('dd')
-# userstory1.add_task(Task("wash", '12/10/2017', '09:00', "please notify upon completion"))
-# print(userstory1)
+
+
